@@ -144,7 +144,7 @@ public class OrderController {
 	@RequestMapping("/shipper/{id}")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> getAllOrderByShipper(@PathVariable("id") String id,
-	@RequestParam(required = false) int page,@RequestParam(required = false) int size,@RequestParam(defaultValue = "created_date") String sortBy,@RequestParam(defaultValue = "1") int asc) {
+	@RequestParam(defaultValue = "1") int page,@RequestParam(defaultValue = "10") int size,@RequestParam(defaultValue = "created_date") String sortBy,@RequestParam(defaultValue = "1") int asc) {
 		try {   
 			List<Order> orderlst = new ArrayList<Order>();
 			if(page < 0 || size < 0){
