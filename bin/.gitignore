@@ -12,8 +12,6 @@ target/
 .settings
 .springBeans
 .sts4-cache
-bin
-.DS_Store
 
 ### IntelliJ IDEA ###
 .idea
@@ -33,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+/.mvn/
+/src/
