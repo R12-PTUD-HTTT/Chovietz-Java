@@ -57,7 +57,7 @@
 		    <version>2.3.1</version>
 		</dependency>
 		
-		<!-- Lombok Logger-->
+		<!-- Lombok Logger Annoation-->
 	    <dependency>
 	        <groupId>org.projectlombok</groupId>
 	        <artifactId>lombok</artifactId>
