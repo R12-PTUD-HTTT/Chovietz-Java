@@ -13,7 +13,9 @@ public class Order {
 	@Id
 	private String id=null;
 	private String customerID=null;
+	private int total_price;
 	private User customer=null;
+	private Receiver receiver=null;
 	private String delivery_address=null;
 	private String status=null;
 	private String typeOrder=null;
@@ -43,6 +45,18 @@ public class Order {
 		this.customerID = customer != null ? customer.getId() + "" : null;
 		this.shopID = shop != null ? shop.getId() + "" : null;
 		this.shipperID = shipper != null ? shipper.getId() + "" : null;
+	}
+	public int getTotal_price() {
+		return total_price;
+	}
+	public void setTotal_price(int total_price) {
+		this.total_price = total_price;
+	}
+	public Object getReceiver() {
+		return receiver;
+	}
+	public void setReceiver(Receiver receiver) {
+		this.receiver = receiver;
 	}
 	public String getTypeOrder() {
 		return typeOrder;

@@ -69,6 +69,18 @@ public class OrderController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
+		@RequestMapping("/{id}")
+		@ResponseBody
+		public ResponseEntity<Order> getOrderDetail(@PathVariable("id") String id) {
+		Optional<Order> orderData = orderRepository.findById(id);
+		if (orderData.isPresent()) {
+			Order _order = orderData.get();
+		
+			return new ResponseEntity<>(_order, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 
 
 	@RequestMapping("/shop/{id}")
@@ -88,6 +100,8 @@ public class OrderController {
 			.withIgnorePaths("id")
 			.withIgnorePaths("customerID")
 			.withIgnorePaths("customer")
+				.withIgnorePaths("total_price")
+			.withIgnorePaths("receiver")
 			.withIgnorePaths("delivery_address")
 			.withIgnorePaths("status")
 			.withIgnorePaths("shop")
@@ -133,8 +147,10 @@ public class OrderController {
 			.withIgnorePaths("id")
 			.withIgnorePaths("shopID")
 			.withIgnorePaths("customer")
+				.withIgnorePaths("total_price")
 			.withIgnorePaths("delivery_address")
 			.withIgnorePaths("status")
+			.withIgnorePaths("receiver")
 			.withIgnorePaths("shop")
 			.withIgnorePaths("shipper")
 			.withIgnorePaths("shopID")
@@ -178,6 +194,8 @@ public class OrderController {
 			.withIgnorePaths("id")
 			.withIgnorePaths("customerID")
 			.withIgnorePaths("customer")
+			.withIgnorePaths("total_price")
+			.withIgnorePaths("receiver")
 			.withIgnorePaths("delivery_address")
 			.withIgnorePaths("status")
 			.withIgnorePaths("shop")
