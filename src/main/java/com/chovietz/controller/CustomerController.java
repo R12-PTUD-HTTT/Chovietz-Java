@@ -29,7 +29,7 @@ import com.chovietz.repository.CustomerRepository;
 
 
 @RestController
-@RequestMapping("api/user/customer")
+@RequestMapping("api/public/customer")
 @CrossOrigin(origins= "*", maxAge=3600)
 public class CustomerController {
 	@Autowired
