@@ -11,28 +11,31 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "Order")
 public class Order {
 	@Id
-	private String id;
-	private String customerID;
-	private User customer;
-
-
-	private String delivery_address;
-	private String status;
-	private String shopID;
-	private User shop;
-	private User shipper;
-	private String shipperID;
-	private String payment_type;
-	private Boolean is_paid;
-	private Object[] product;
+	private String id=null;
+	private String customerID=null;
+	private int total_price;
+	private User customer=null;
+	private Receiver receiver=null;
+	private String delivery_address=null;
+	private String status=null;
+	private String typeOrder=null;
+	private String shopID=null;
+	private User shop=null;
+	private User shipper=null;
+	private String shipperID=null;
+	private String payment_type=null;
+	private Boolean is_paid=null;
+	private Object[] product=null;
 	private int month;
 	private int quater;
 	private int year;
-	private Date created_date;
-		public Order(String id,User customer, String delivery_address, String status, User shop, User shipper,
-			String payment_type, Boolean is_paid, Object[] product) {
-			this.id = id;
-				this.customer = customer;
+	private Date created_date=null;
+	private Date updated_date=null;
+	public Order(String id,User customer,Receiver receiver, String delivery_address, String status, User shop, User shipper,
+		String payment_type, Boolean is_paid, Object[] product) {
+		this.id = id;
+		this.customer = customer;
+		this.receiver = receiver;
 		this.delivery_address = delivery_address;
 		this.status = status;
 		this.shop = shop;
@@ -40,7 +43,34 @@ public class Order {
 		this.payment_type = payment_type;
 		this.is_paid = is_paid;
 		this.product = product;
+		this.customerID = customer != null ? customer.getId() + "" : null;
+		this.shopID = shop != null ? shop.getId() + "" : null;
+		this.shipperID = shipper != null ? shipper.getId() + "" : null;
 	}
+	public int getTotal_price() {
+		return total_price;
+	}
+	public void setTotal_price(int total_price) {
+		this.total_price = total_price;
+	}
+	public Receiver getReceiver() {
+		return receiver;
+	}
+	public void setReceiver(Receiver receiver) {
+		this.receiver = receiver;
+	}
+	public String getTypeOrder() {
+		return typeOrder;
+	}
+	public void setTypeOrder(String typeOrder) {
+		this.typeOrder = typeOrder;
+	}
+	public Date getUpdated_date() {
+			return updated_date;
+		}
+		public void setUpdated_date(Date updated_date) {
+			this.updated_date = updated_date;
+		}
 	public String getShipperID() {
 			return shipperID;
 		}
