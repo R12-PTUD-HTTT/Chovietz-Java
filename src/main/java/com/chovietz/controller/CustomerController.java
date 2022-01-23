@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,7 +29,7 @@ import com.chovietz.repository.CustomerRepository;
 
 
 @RestController
-@RequestMapping("api/public/customer")
+@RequestMapping("api/user/customer")
 @CrossOrigin(origins= "*", maxAge=3600)
 public class CustomerController {
 	@Autowired
@@ -41,6 +43,21 @@ public class CustomerController {
 			Customer _customer = customer.get();
 			
 			return new ResponseEntity<Customer>(_customer,HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	@PutMapping("/{id}")
+	public ResponseEntity<Customer> updateInfo(@PathVariable("id") String id, @RequestBody Customer request) {
+		Optional<Customer> cusData = customerRepository.findById(id);
+		if (cusData.isPresent()) {
+			Customer _cus = cusData.get();
+			_cus.setName(request.getName());
+			_cus.setGender(request.getGender());
+			_cus.setDate_of_birth(request.getDate_of_birth());
+			_cus.setPhoneNumber(request.getPhoneNumber());
+			_cus.setEmail(request.getEmail());
+			return new ResponseEntity<>(customerRepository.save(_cus), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

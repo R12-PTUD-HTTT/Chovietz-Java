@@ -16,6 +16,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.chovietz.service.JwtUserDetailsService;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -29,6 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
+    	log.debug("test");
     	return new AuthTokenFilter();
     }
 
