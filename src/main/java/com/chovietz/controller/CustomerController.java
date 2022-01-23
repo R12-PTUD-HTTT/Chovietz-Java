@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -25,7 +26,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.chovietz.model.Customer;
 import com.chovietz.model.Order;
 import com.chovietz.model.User;
+import com.chovietz.payload.ChangepassReq;
+import com.chovietz.payload.MessageRes;
 import com.chovietz.repository.CustomerRepository;
+
+import lombok.extern.java.Log;
 
 
 @RestController
@@ -34,6 +39,9 @@ import com.chovietz.repository.CustomerRepository;
 public class CustomerController {
 	@Autowired
     private CustomerRepository customerRepository;
+	
+    @Autowired
+    PasswordEncoder encoder;
 	
 	@RequestMapping("/{id}")
 	@ResponseBody
@@ -58,6 +66,29 @@ public class CustomerController {
 			_cus.setPhoneNumber(request.getPhoneNumber());
 			_cus.setEmail(request.getEmail());
 			return new ResponseEntity<>(customerRepository.save(_cus), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	@PutMapping("/changepass/{id}")
+	public ResponseEntity<?> changePass(@PathVariable("id") String id, @RequestBody ChangepassReq request) {
+		Optional<Customer> cusData = customerRepository.findById(id);
+		if (cusData.isPresent()) {
+			Customer _cus = cusData.get();
+		
+			if(encoder.matches(request.getCurrent(), _cus.getPassword())) {
+				if(request.getNewpass().equals(request.getComfirm())) {
+					_cus.setPassword(encoder.encode(request.getNewpass()));
+					return new ResponseEntity<>(customerRepository.save(_cus), HttpStatus.OK);
+				}
+				else {
+					return new ResponseEntity<>(new MessageRes("Mật khẩu xác nhận không trùng khớp"),HttpStatus.NOT_FOUND);
+				}
+			}
+			else {
+				return new ResponseEntity<>(new MessageRes("Mật khẩu hiện tại không trùng khớp"),HttpStatus.NOT_FOUND);
+			}
+			
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
