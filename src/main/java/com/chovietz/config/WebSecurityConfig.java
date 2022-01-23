@@ -31,7 +31,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
-    	log.debug("test");
     	return new AuthTokenFilter();
     }
 
@@ -58,10 +57,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 	        .authorizeRequests()
 	        .antMatchers("/api/public/**").permitAll()
-	        .antMatchers("/api/user/**").hasAnyRole("CUSTOMER")
-	        .antMatchers("/api/shop/**").hasAnyRole("SHOP")
-	        .antMatchers("/api/shipper/**").hasAnyRole("SHIPPER")
-	        .antMatchers("/api/admin/**").hasRole("ADMIN")
+	        .antMatchers("/api/user/**").hasAuthority("customer")
+	        .antMatchers("/api/shop/**").hasAuthority("shop")
+	        .antMatchers("/api/shipper/**").hasAuthority("shipper")
+	        .antMatchers("/api/admin/**").hasAuthority("admin")
 	        .anyRequest().authenticated();
 	        
 	        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
