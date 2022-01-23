@@ -8,10 +8,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "user")
 public class User {
 	@Id
-	private String id;
-	private String username;
-	private String password;
-	private String rolename;
+	private String id=null;
+	private String username=null;
+	private String password=null;
+	private String rolename=null;
 	
 	public String getId() {
 		return id;
