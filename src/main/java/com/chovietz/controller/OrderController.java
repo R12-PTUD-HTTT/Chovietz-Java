@@ -40,7 +40,8 @@ public class OrderController {
     @PostMapping("")
     public ResponseEntity<?> createOrder(@RequestBody Order orderReq){
         try {
-                Order requestOrder = new Order(orderReq.getId(), orderReq.getCustomer(), orderReq.getDelivery_address(),orderReq.getStatus(), orderReq.getShop(),
+                Order requestOrder = new Order(orderReq.getId(), orderReq.getCustomer(), orderReq.getReceiver(), orderReq.getDelivery_address(), 
+				orderReq.getStatus(), orderReq.getShop(),
                 orderReq.getShipper(), orderReq.getPayment_type(), orderReq.getIs_paid(), orderReq.getProduct());
                 
 				requestOrder.setCreated_date(new Date());
@@ -100,7 +101,7 @@ public class OrderController {
 			.withIgnorePaths("id")
 			.withIgnorePaths("customerID")
 			.withIgnorePaths("customer")
-				.withIgnorePaths("total_price")
+			.withIgnorePaths("total_price")
 			.withIgnorePaths("receiver")
 			.withIgnorePaths("delivery_address")
 			.withIgnorePaths("status")
@@ -113,6 +114,8 @@ public class OrderController {
 			.withIgnorePaths("month")
 			.withIgnorePaths("quater")
 			.withIgnorePaths("year")
+			.withIgnorePaths("_class")
+			.withIgnorePaths("typeOrder")
 			.withIgnorePaths("created_date")
 			.withIgnorePaths("updated_date")
 			);

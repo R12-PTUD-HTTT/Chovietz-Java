@@ -31,10 +31,11 @@ public class Order {
 	private int year;
 	private Date created_date=null;
 	private Date updated_date=null;
-	public Order(String id,User customer, String delivery_address, String status, User shop, User shipper,
+	public Order(String id,User customer,Receiver receiver, String delivery_address, String status, User shop, User shipper,
 		String payment_type, Boolean is_paid, Object[] product) {
 		this.id = id;
 		this.customer = customer;
+		this.receiver = receiver;
 		this.delivery_address = delivery_address;
 		this.status = status;
 		this.shop = shop;
@@ -52,7 +53,7 @@ public class Order {
 	public void setTotal_price(int total_price) {
 		this.total_price = total_price;
 	}
-	public Object getReceiver() {
+	public Receiver getReceiver() {
 		return receiver;
 	}
 	public void setReceiver(Receiver receiver) {
