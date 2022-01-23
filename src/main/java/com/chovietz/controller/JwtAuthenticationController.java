@@ -64,7 +64,7 @@ public class JwtAuthenticationController {
     	
     	UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
     	String userRole = userDetails.getRolename();
-    	return ResponseEntity.ok(new JwtResponse(jwt, userRole));
+    	return ResponseEntity.ok(new JwtResponse(jwt, userRole, userDetails.getId()));
     }
     
 }
