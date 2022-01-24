@@ -36,7 +36,7 @@ import lombok.extern.java.Log;
 
 @RestController
 @RequestMapping("api/user/customer")
-@CrossOrigin(origins= "*", maxAge=3600)
+@CrossOrigin( maxAge=3600)
 public class CustomerController {
 	@Autowired
     private CustomerRepository customerRepository;
@@ -50,7 +50,7 @@ public class CustomerController {
 		Optional<Customer> customer = customerRepository.findById(id);
 		if (customer.isPresent()) {
 			Customer _customer = customer.get();
-			
+			_customer.setPassword(null);
 			return new ResponseEntity<Customer>(_customer,HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -66,6 +66,7 @@ public class CustomerController {
 			_cus.setDate_of_birth(request.getDate_of_birth());
 			_cus.setPhoneNumber(request.getPhoneNumber());
 			_cus.setEmail(request.getEmail());
+			_cus.setReceiver_infor(request.getReceiver_infor());
 			return new ResponseEntity<>(customerRepository.save(_cus), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

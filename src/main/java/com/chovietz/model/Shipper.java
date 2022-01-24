@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "user")
 public class Shipper extends User {
     private String name=null;
-    private String phoneNumber=null;
+    private String phone_number=null;
     private String work_city;
     private String work_district;
     private String work_ward;
@@ -31,10 +31,10 @@ public class Shipper extends User {
         this.work_city = work_city;
     }
     public String getPhoneNumber() {
-        return phoneNumber;
+        return phone_number;
     }
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+        this.phone_number = phoneNumber;
     }
     public void setName(String name) {
         this.name = name;
