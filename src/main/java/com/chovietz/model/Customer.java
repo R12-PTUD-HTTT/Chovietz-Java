@@ -20,5 +20,6 @@ public class Customer extends User{
 	private String phoneNumber;
 	private String gender;
 	private List<Cart> cart;
+	private Receiver receiver_infor;
 	
 }
