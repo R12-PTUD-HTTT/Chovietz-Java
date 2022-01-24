@@ -15,5 +15,5 @@ public class Shop extends User{
 	private String phoneNumber;
 	private String email;
 	private Date date_of_birth;
-	private Store storeInfo;
+	private storeInfo storeInfo;
 }

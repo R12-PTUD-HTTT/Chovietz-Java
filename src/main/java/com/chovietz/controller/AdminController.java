@@ -17,8 +17,11 @@ import com.chovietz.model.Customer;
 import com.chovietz.model.Order;
 import com.chovietz.model.Shop;
 import com.chovietz.model.ShopApply;
+import com.chovietz.model.Store;
+import com.chovietz.model.storeInfo;
 import com.chovietz.repository.ShopApplyRepository;
 import com.chovietz.repository.ShopRepository;
+import com.chovietz.repository.StoreRepository;
 
 
 
@@ -30,6 +33,9 @@ public class AdminController {
     private ShopApplyRepository ShopApplyRepo;
 	@Autowired
 	private ShopRepository ShopRepo;
+	@Autowired
+	private StoreRepository StoreRepo;
+	
 	
 	@Autowired
     PasswordEncoder encoder;
@@ -59,6 +65,15 @@ public class AdminController {
 			shopAcc.setEmail(_form.getEmail());
 			shopAcc.setName(_form.getHoten());
 			shopAcc.setPhoneNumber(_form.getSdt());
+			
+			Store store = new Store();
+			store.setStore_name(_form.getHoten());
+			store.setPhone_number(_form.getSdt());
+			store.setAddress(_form.getDiachi());
+			
+			StoreRepo.save(store);
+			
+			shopAcc.setStoreInfo(new storeInfo(store.get_id(),store.getStore_name(),store.getPhone_number()));
 			return new ResponseEntity<Shop>(ShopRepo.save(shopAcc),HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
