@@ -6,21 +6,21 @@ public class Receiver {
     private String city;
     private String district;
     private String ward;
-    private String address;
+    private String street;
     public String getName() {
         return name;
+    }
+    public String getStreet() {
+        return street;
+    }
+    public void setStreet(String street) {
+        this.street = street;
     }
     public String getPhong_number() {
         return phone_number;
     }
     public void setPhong_number(String phone_number) {
         this.phone_number = phone_number;
-    }
-    public String getAddress() {
-        return address;
-    }
-    public void setAddress(String address) {
-        this.address = address;
     }
     public String getWard() {
         return ward;
