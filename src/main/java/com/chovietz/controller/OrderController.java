@@ -70,19 +70,33 @@ public class OrderController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-		@RequestMapping("/{id}")
-		@ResponseBody
-		public ResponseEntity<Order> getOrderDetail(@PathVariable("id") String id) {
+		
+	@PutMapping("/{id}/return")
+	public ResponseEntity<Order> updateOrderReturn(@PathVariable("id") String id, @RequestBody Order request ) {
 		Optional<Order> orderData = orderRepository.findById(id);
 		if (orderData.isPresent()) {
 			Order _order = orderData.get();
-		
+			_order.setStatus(request.getStatus());
+			_order.setReturn_order_id(request.getReturn_order_id());
+			_order.setTypeOrder(request.getTypeOrder());
+			_order.setUpdated_date(new Date());
+			return new ResponseEntity<>(orderRepository.save(_order), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	@RequestMapping("/{id}")
+	@ResponseBody
+	public ResponseEntity<Order> getOrderDetail(@PathVariable("id") String id) {
+	Optional<Order> orderData = orderRepository.findById(id);
+		if (orderData.isPresent()) {
+			Order _order = orderData.get();
+
 			return new ResponseEntity<>(_order, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-
 
 	@RequestMapping("/shop/{id}")
 	@ResponseBody
@@ -115,7 +129,7 @@ public class OrderController {
 			.withIgnorePaths("quater")
 			.withIgnorePaths("year")
 			.withIgnorePaths("_class")
-			.withIgnorePaths("typeOrder")
+			.withIgnorePaths("return_order_id")
 			.withIgnorePaths("created_date")
 			.withIgnorePaths("updated_date")
 			);
@@ -159,6 +173,7 @@ public class OrderController {
 			.withIgnorePaths("shopID")
 			.withIgnorePaths("payment_type")
 			.withIgnorePaths("is_paid")
+			.withIgnorePaths("return_order_id")
 			.withIgnorePaths("product")
 			.withIgnorePaths("month")
 			.withIgnorePaths("quater")
@@ -206,6 +221,7 @@ public class OrderController {
 			.withIgnorePaths("shipper")
 			.withIgnorePaths("shopID")
 			.withIgnorePaths("payment_type")
+			.withIgnorePaths("return_order_id")
 			.withIgnorePaths("is_paid")
 			.withIgnorePaths("product")
 			.withIgnorePaths("month")
