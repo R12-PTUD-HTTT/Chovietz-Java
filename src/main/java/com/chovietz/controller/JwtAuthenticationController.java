@@ -3,7 +3,7 @@ package com.chovietz.controller;
 import java.util.Objects;
 import java.text.ParseException;
 
-
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -52,9 +52,9 @@ public class JwtAuthenticationController {
     	if(userRepository.findByUsername(userreq.getUsername()) != null) {
     		return ResponseEntity
     				.badRequest()
-    				.body("Error");
+    				.body("Username already Exist");
     	}
-    	User user = userRepository.save(new User(userreq.getId(), userreq.getUsername(),encoder.encode(userreq.getPassword()), "customer", userreq.getEmail(),userreq.getCmnd(), userreq.getAddress(), userreq.getBirthday(), userreq.getName(), userreq.getPhoneNumber(), "active"));
+    	User user = userRepository.save(new User(ObjectId.get().toString(), userreq.getUsername(),encoder.encode(userreq.getPassword()), "customer", userreq.getEmail(),userreq.getCmnd(), userreq.getAddress(), userreq.getBirthday(), userreq.getName(), userreq.getPhoneNumber(), "active"));
     	return ResponseEntity.ok(null);
     }
     @PostMapping("/signin")
