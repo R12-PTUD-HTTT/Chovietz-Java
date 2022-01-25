@@ -13,10 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.chovietz.model.Shipper;
+import com.chovietz.model.ShipperApply;
 import com.chovietz.model.Shop;
 import com.chovietz.model.ShopApply;
 import com.chovietz.model.Store;
 import com.chovietz.payload.MessageRes;
+import com.chovietz.repository.ShipperApplyRepository;
+import com.chovietz.repository.ShipperRepository;
 import com.chovietz.repository.ShopApplyRepository;
 import com.chovietz.repository.ShopRepository;
 import com.chovietz.repository.StoreRepository;
@@ -30,10 +34,13 @@ public class AdminController {
 	@Autowired
     private ShopApplyRepository ShopApplyRepo;
 	@Autowired
+    private ShipperApplyRepository ShipperApplyRepo;
+	@Autowired
 	private ShopRepository ShopRepo;
 	@Autowired
 	private StoreRepository StoreRepo;
-	
+	@Autowired
+	private ShipperRepository ShipperRepo;
 	
 	@Autowired
     PasswordEncoder encoder;
@@ -84,6 +91,31 @@ public class AdminController {
 				return new ResponseEntity<Shop>(ShopRepo.save(shopAcc),HttpStatus.OK);
 			}
 			
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	@RequestMapping("/createshipperacc/{id}")
+	@ResponseBody
+	public ResponseEntity<?> createShipperAccount (@PathVariable("id") String id) {
+		Optional<ShipperApply> shipperApplyData = ShipperApplyRepo.findById(id);
+		if (shipperApplyData.isPresent()) {
+			ShipperApply _form = shipperApplyData.get();
+			Shipper shipperAcc = new Shipper();
+			
+			if(ShipperRepo.findByUsername(_form.getEmail()) != null) {
+				return new ResponseEntity<>(new MessageRes("Email đã được sử dụng"),HttpStatus.BAD_REQUEST);
+			}
+			else {
+				shipperAcc.setUsername(_form.getEmail());
+				shipperAcc.setRolename("shipper");
+				shipperAcc.setPassword(encoder.encode(_form.getTel()));
+				shipperAcc.setPhoneNumber(_form.getTel());
+				shipperAcc.setWork_district(_form.getWork_area());
+
+				ShipperApplyRepo.delete(_form);
+				return new ResponseEntity<Shipper>(ShipperRepo.save(shipperAcc),HttpStatus.OK);
+			}
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
