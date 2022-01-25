@@ -26,6 +26,7 @@ public class Order {
 	private String payment_type=null;
 	private Boolean is_paid=null;
 	private Object[] product=null;
+	private String return_order_id=null;
 	private int month;
 	private int quater;
 	private int year;
@@ -46,6 +47,12 @@ public class Order {
 		this.customerID = customer != null ? customer.getId() + "" : null;
 		this.shopID = shop != null ? shop.getId() + "" : null;
 		this.shipperID = shipper != null ? shipper.getId() + "" : null;
+	}
+	public String getReturn_order_id() {
+		return return_order_id;
+	}
+	public void setReturn_order_id(String return_order_id) {
+		this.return_order_id = return_order_id;
 	}
 	public int getTotal_price() {
 		return total_price;
