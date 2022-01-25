@@ -10,9 +10,6 @@ import java.util.List;
 import com.chovietz.model.Order;
 
 public interface OrderRepository extends MongoRepository<Order, String>{
-	@Query("{_id:'?0'}")
-	List<Order> findByID(String id);
-
 	@Query("{shopID:'?0'}")
 	List<Order> findByShopID(String shopID);
 

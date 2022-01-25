@@ -31,7 +31,6 @@ public class Order {
 	private int year;
 	private Date created_date=null;
 	private Date updated_date=null;
-	private String return_order_id=null;
 	public Order(String id,User customer,Receiver receiver, String delivery_address, String status, User shop, User shipper,
 		String payment_type, Boolean is_paid, Object[] product) {
 		this.id = id;
@@ -47,12 +46,6 @@ public class Order {
 		this.customerID = customer != null ? customer.getId() + "" : null;
 		this.shopID = shop != null ? shop.getId() + "" : null;
 		this.shipperID = shipper != null ? shipper.getId() + "" : null;
-	}
-	public String getReturn_order_id() {
-		return return_order_id;
-	}
-	public void setReturn_order_id(String return_order_id) {
-		this.return_order_id = return_order_id;
 	}
 	public int getTotal_price() {
 		return total_price;

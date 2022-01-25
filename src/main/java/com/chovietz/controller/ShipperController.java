@@ -33,26 +33,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/shipper")
+@RequestMapping("api/public/shipper")
 @CrossOrigin(origins= "*", maxAge=3600)
 public class ShipperController {
       @Autowired
     private ShipperRepository shipperRepository;
-
-	@RequestMapping("/{id}")
-	@ResponseBody
-	public ResponseEntity<?> getAllShipperByWorkArea(@PathVariable("id") String id)
-	{
-		Optional<Shipper> shipper = shipperRepository.findById(id);
-		if (shipper.isPresent()) {
-			Shipper _shipper = shipper.get();
-			_shipper.setPassword(null);
-			return new ResponseEntity<Shipper>(_shipper,HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
-
     @RequestMapping("")
 	@ResponseBody
 	public ResponseEntity<?> getAllShipperByWorkArea(
