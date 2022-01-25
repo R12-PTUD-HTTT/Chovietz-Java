@@ -70,13 +70,28 @@ public class OrderController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-		@RequestMapping("/{id}")
-		@ResponseBody
-		public ResponseEntity<Order> getOrderDetail(@PathVariable("id") String id) {
+		
+	@PutMapping("/{id}/return")
+	public ResponseEntity<Order> updateOrderReturn(@PathVariable("id") String id, @RequestBody Order request ) {
 		Optional<Order> orderData = orderRepository.findById(id);
 		if (orderData.isPresent()) {
 			Order _order = orderData.get();
-		
+			_order.setStatus(request.getStatus());
+			_order.setReturn_order_id(request.getReturn_order_id());
+			_order.setTypeOrder(request.getTypeOrder());
+			_order.setUpdated_date(new Date());
+			return new ResponseEntity<>(orderRepository.save(_order), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	@RequestMapping("/{id}")
+	@ResponseBody
+	public ResponseEntity<Order> getOrderDetail(@PathVariable("id") String id) {
+	Optional<Order> orderData = orderRepository.findById(id);
+		if (orderData.isPresent()) {
+			Order _order = orderData.get();
+
 			return new ResponseEntity<>(_order, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -114,8 +129,8 @@ public class OrderController {
 			.withIgnorePaths("month")
 			.withIgnorePaths("quater")
 			.withIgnorePaths("year")
+			.withIgnorePaths("return_order_id")
 			.withIgnorePaths("_class")
-			.withIgnorePaths("typeOrder")
 			.withIgnorePaths("created_date")
 			.withIgnorePaths("updated_date")
 			);
@@ -158,6 +173,7 @@ public class OrderController {
 			.withIgnorePaths("shipper")
 			.withIgnorePaths("shopID")
 			.withIgnorePaths("payment_type")
+			.withIgnorePaths("return_order_id")
 			.withIgnorePaths("is_paid")
 			.withIgnorePaths("product")
 			.withIgnorePaths("month")
@@ -208,6 +224,7 @@ public class OrderController {
 			.withIgnorePaths("payment_type")
 			.withIgnorePaths("is_paid")
 			.withIgnorePaths("product")
+			.withIgnorePaths("return_order_id")
 			.withIgnorePaths("month")
 			.withIgnorePaths("quater")
 			.withIgnorePaths("year")
