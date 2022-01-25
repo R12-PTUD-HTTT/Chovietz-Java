@@ -3,6 +3,8 @@ package com.chovietz.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+
 import com.chovietz.model.Shipper;
 import com.chovietz.repository.ShipperRepository;
 
@@ -12,6 +14,7 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/public/shipper")
 @CrossOrigin(origins= "*", maxAge=3600)
 public class ShipperController {
-      @Autowired
+    @Autowired
     private ShipperRepository shipperRepository;
     @RequestMapping("")
 	@ResponseBody
@@ -52,6 +55,18 @@ public class ShipperController {
 		} catch (Exception e) {
                 System.out.println(e);
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	@RequestMapping("/{id}")
+	@ResponseBody
+	public ResponseEntity<?> getShipperInfo(@PathVariable("id") String id) {
+		Optional<Shipper> shipper = shipperRepository.findById(id);
+		if (shipper.isPresent()) {
+			Shipper _shipper = shipper.get();
+			_shipper.setPassword(null);
+			return new ResponseEntity<Shipper>(_shipper,HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 }
