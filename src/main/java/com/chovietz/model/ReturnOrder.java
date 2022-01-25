@@ -15,6 +15,7 @@ public class ReturnOrder {
 	private String id;
 	private Shipper shipper;
     private Order order;
+    private Order new_order;
     private Object[] product_return;
     private String reason;
     private Date created_date;

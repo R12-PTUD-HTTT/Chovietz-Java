@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import com.chovietz.model.Order;
+import com.chovietz.model.Shipper;
 import com.chovietz.repository.OrderRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,6 +81,18 @@ public class OrderController {
 			_order.setReturn_order_id(request.getReturn_order_id());
 			_order.setTypeOrder(request.getTypeOrder());
 			_order.setUpdated_date(new Date());
+			return new ResponseEntity<>(orderRepository.save(_order), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	@PutMapping("/{id}/shipper")
+	public ResponseEntity<Order> updateShipperForOrder(@PathVariable("id") String id, @RequestBody Shipper shipper ) {
+		Optional<Order> orderData = orderRepository.findById(id);
+		if (orderData.isPresent()) {
+			Order _order = orderData.get();
+			_order.setShipper(shipper);
+			_order.setShipperID(shipper.getId());
 			return new ResponseEntity<>(orderRepository.save(_order), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
