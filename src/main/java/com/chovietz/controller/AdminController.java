@@ -80,6 +80,7 @@ public class AdminController {
 				storeInfo.setStore_name(store.getStore_name());
 				storeInfo.setPhone_number(store.getPhone_number());
 				shopAcc.setStoreInfo(storeInfo);
+				ShopApplyRepo.delete(_form);
 				return new ResponseEntity<Shop>(ShopRepo.save(shopAcc),HttpStatus.OK);
 			}
 			
